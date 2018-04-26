@@ -1,3 +1,16 @@
+/* Modules
+    1. Creating fragments
+    2. Creating components with factories
+    3. Adding event listeners to components
+    4. Adding components to DOM
+    5. Clearing fields
+*/
+
+const DomBuilder = require("./DomBuilder")
+
+
+
+
 // Final output DOM component reference
 const output = document.querySelector(".output")
 
@@ -19,9 +32,18 @@ const inputFieldFactory = (classList, defaultPlaceHolderText, type) => {
 const buttonFactory = (classList, textContent) => {
     const theButton = document.createElement("button")
     theButton.classList = classList
-    theButton.placeholder = textContent
+    theButton.textContent = textContent
     return theButton
 }
+
+// Create card component
+const cardFactory = (classList, textContent) => {
+    const theSection = document.createElement("section")
+    theSection.classList = classList
+    theSection.textContent = textContent
+    return theSection
+}
+
 
 const createCardButton = buttonFactory("button-submit", "Create Card")
 const cardTextInput = inputFieldFactory("input--text", "Enter card text here", "text")
@@ -33,17 +55,16 @@ createCardButton.addEventListener("click", function () {
     // 1. Get Value of input field
     const userEntry = cardTextInput.value
     // 2. Create card component with text inside
+    output.appendChild(cardFactory("card", userEntry))
+    cardTextInput.value = ""
 })
-
 
 fragment.appendChild(cardTextInput)
 fragment.appendChild(createCardButton)
 
 
-fragment.appendChild(inputFieldFactory("input--text", "Enter card text here", "text"))
-fragment.appendChild(buttonFactory("button--submit", "Create Card"))
-
-// output.appendChild(fragment)
+DomBuilder(frament, ".output")
+output.appendChild(fragment)
 
 
 // Create card component
